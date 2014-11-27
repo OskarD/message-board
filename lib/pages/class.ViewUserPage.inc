@@ -1,6 +1,7 @@
 <?php
 	require_once 'lib/class.Page.inc';
 	require_once 'lib/class.DB.inc';
+	require_once 'lib/class.User.inc';
 
 	class ViewUserPage extends Page {
 		private
@@ -21,7 +22,7 @@
 		}
 
 		public function loadUser($userId) {
-			$this->setUser(DB::getUserWithId($userId));
+			$this->setUser(User::getUserById($userId));
 		}
 
 		public function getUserHTMLProfile() {
@@ -31,7 +32,7 @@
 					Username: " . $this->getUser()->getName() . "<br />
 					E-mail: " . $this->getUser()->getEmail();
 
-			$groups = DB::getGroupsForUserWithId($this->getUser()->getId());
+			$groups = $this->user->getGroups();
 
 			if(count($groups) > 0) {
 				$output .= "<div class='profile_view_groups'>Groups: <ol>";
@@ -41,7 +42,7 @@
 				$output .= "</ol></div>";
 			}
 
-			$postCount = DB::getPostCountByUserId($this->getUser()->getId());
+			$postCount = $this->user->getPostCount();
 
 			$output .= "<div class='profile_view_stats'><strong>Forum Statistics</strong><br />
 							Posts made: " . $postCount . "

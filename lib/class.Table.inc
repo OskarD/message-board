@@ -1,5 +1,6 @@
 <?php
 	require_once 'class.Topic.inc';
+	require_once 'class.DB.inc';
 
 	class Table {
 		private
@@ -70,6 +71,38 @@
 			$this->setUserGroupViewing($userGroupViewing);
 			$this->setUserGroupPosting($userGroupPosting);
 			$this->setTopics($topics);
+		}
+
+		// Database functions
+		public static function getTableById($tableId) {
+			$db = DB::getDb();
+
+			$query ="SELECT * FROM tables WHERE id = :table_id";
+			$stmt = $db->prepare($query);
+			$stmt->bindParam(":table_id", $tableId);
+			$stmt->execute();
+
+			$table = $stmt->fetch(PDO::FETCH_ASSOC);
+
+			return new Table($table['id'], $table['date'], $table['name'], $table['user_group_viewing'], $table['user_group_posting']);
+		}
+
+		public function loadTopics() {
+			$db = DB::getDb();
+
+			$query ="SELECT * FROM topics WHERE `table` = :table_id";
+			$stmt = $db->prepare($query);
+			$stmt->bindParam(":table_id", $this->id);
+			$stmt->execute();
+
+			$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+			$topics = array();
+			foreach($result as $topic) {
+				$topics[] = new Topic($topic['id'], $topic['date'], $topic['table'], $topic['name'], $topic['user']);
+			}
+
+			return $topics;
 		}
 	}
 ?>

@@ -7,7 +7,7 @@
 			$topic,
 			$posts = array();
 
-		public function setTopic($topic) {
+		public function setTopic(Topic $topic) {
 			$this->topic = $topic;
 		}
 
@@ -37,16 +37,31 @@
 		}
 
 		public function loadTopic($topicId) {
-			$this->setTopic(DB::getTopicWithId($topicId));
+			$this->setTopic(Topic::getTopicWithId($topicId));
 		}
 
 		public function loadPosts() {
-			$this->setPosts(DB::getPostsWithTopicId($this->getTopic()->getId()));
+			$this->setPosts($this->topic->loadPosts());
 		}
 
 		public function getTopicHTML() {
 			$output = "<div class='topic'><h2>View Topic: " . $this->getTopic()->getName() . "</h2>";
 
+			$output .= "<div class='topic_subject'>Subject: " . $this->getTopic()->getHTMLLinkedName() . "</div>";
+			
+			$topicCreator = $this->topic->getTopicCreator();
+
+			$output .= "<div class='topic_created'>Created by: " . $topicCreator->getName() . " at " . $this->getTopic()->getDate() . "</div>";
+
+			$output .= "<div class='topic_posts'>";
+
+			foreach($this->getPosts() as $post) {
+				$output .= "<div class='post'>
+								<div class='post_info'>Post by: " . $post->getCreator()->getName() . " at " . $post->getDate() . "</div>
+								<div class='post_text'>" . $post->getText() . "</div>";
+			}
+
+			$output .= "</div>";
 
 			return $output . "</div>";
 		}

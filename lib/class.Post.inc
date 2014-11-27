@@ -1,5 +1,6 @@
 <?php
 	require_once 'class.Topic.inc';
+	require_once 'class.DB.inc';
 
 	class Post {
 		private
@@ -55,6 +56,46 @@
 			$this->setTopic($topic);
 			$this->setUserId($userId);
 			$this->setText($text);
+		}
+
+		// Database functions
+		public static function getPostById($postId) {
+			$db = DB::getDb();
+			$query ="SELECT * FROM posts WHERE id = :post_id";
+			$stmt = $db->prepare($query);
+			$stmt->bindParam(":post_id", $postId);
+			$stmt->execute();
+
+			$post = $stmt->fetch(PDO::FETCH_ASSOC);
+
+			return new Post($post['id'], $post['date'], $post['topic'], $post['user'], $post['text']);
+		}
+
+		public function getCreator() {
+			$db = DB::getDb();
+
+			$query ="SELECT 
+						 users.id as id, 
+						 users.name as name, 
+						 users.password as password, 
+						 users.email as email, 
+						 users.default_group as default_group
+					FROM 
+						users 
+					JOIN 
+						posts
+					ON 
+						posts.user = users.id
+					WHERE 
+						posts.id = :post_id";
+
+			$stmt = $db->prepare($query);
+			$stmt->bindParam(":post_id", $this->id);
+			$stmt->execute();
+
+			$user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+			return new User($user['id'], $user['name'], $user['password'], $user['email'], $user['default_group']);
 		}
 	}
 ?>

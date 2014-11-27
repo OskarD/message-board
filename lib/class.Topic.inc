@@ -1,5 +1,6 @@
 <?php
 	require_once 'class.Post.inc';
+	require_once 'class.DB.inc';
 
 	class Topic {
 		private
@@ -79,6 +80,80 @@
 			$this->setName($name);
 			$this->setUser($user);
 			$this->setPosts($posts);
+		}
+
+		public function getHTMLLinkedName() {
+			return "<a href='view_topic.php?topic_id=" . $this->getId() . "'>" . $this->getName() . "</a>";
+		}
+
+		// Database functions
+		public function getLastPost() {
+			$db = DB::getDb();
+			$query ="SELECT * FROM posts WHERE topic = :topic_id ORDER BY date DESC LIMIT 1";
+			$stmt = $db->prepare($query);
+			$stmt->bindParam(":topic_id", $this->id);
+			$stmt->execute();
+
+			$post = $stmt->fetch(PDO::FETCH_ASSOC);
+
+			return new Post($post['id'], $post['date'], $post['topic'], $post['user'], $post['text']);
+		}
+
+		public function loadPosts() {
+			$db = DB::getDb();
+			$query ="SELECT * FROM posts WHERE topic = :topic_id ORDER BY date DESC";
+			$stmt = $db->prepare($query);
+			$stmt->bindParam(":topic_id", $this->id);
+			$stmt->execute();
+
+			$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+			$posts = array();
+			foreach($result as $post) {
+				$posts[] = new Post($post['id'], $post['date'], $post['topic'], $post['user'], $post['text']);
+			}
+
+			return $posts;
+		}
+
+		public static function getTopicWithId($topicId) {
+			$db = DB::getDb();
+
+			$query ="SELECT * FROM topics WHERE id = :topic_id";
+			$stmt = $db->prepare($query);
+			$stmt->bindParam(":topic_id", $topicId);
+			$stmt->execute();
+
+			$result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+			return new Topic($result['id'], $result['date'], $result['table'], $result['name'], $result['user']);
+		}
+
+		public function getTopicCreator() {
+			$db = DB::getDb();
+
+			$query ="SELECT 
+						 users.id as id, 
+						 users.name as name, 
+						 users.password as password, 
+						 users.email as email, 
+						 users.default_group as default_group
+					FROM 
+						users 
+					JOIN 
+						topics
+					ON 
+						topics.user = users.id
+					WHERE 
+						topics.id = :topic_id";
+
+			$stmt = $db->prepare($query);
+			$stmt->bindParam(":topic_id", $this->id);
+			$stmt->execute();
+
+			$user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+			return new User($user['id'], $user['name'], $user['password'], $user['email'], $user['default_group']);
 		}
 	}
 ?>
