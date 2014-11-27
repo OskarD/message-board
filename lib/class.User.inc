@@ -2,7 +2,7 @@
 	require_once 'class.DB.inc';
 
 	class User {
-		private
+		protected
 			$id,
 			$name,
 			$password,
@@ -79,7 +79,10 @@
 			$db = DB::getDb();
 
 			$query ="SELECT 
-						groups.id as id, groups.name as name, groups.admin as admin
+						groups.id as id, 
+						groups.name as name, 
+						groups.description as description,
+						groups.admin as admin
 					FROM 
 						groups 
 					JOIN 
@@ -101,7 +104,7 @@
 
 			$groups = array();
 			foreach($result as $group) {
-				$groups[] = new Group($group['id'], $group['name'], $group['admin']);
+				$groups[] = new Group($group['id'], $group['name'], $group['description'], $group['admin']);
 			}
 
 			return $groups;

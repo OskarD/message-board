@@ -3,3 +3,4 @@ Usernames: 3-30
 Passwords: 4-30
 Topic names: 4-35
 Post texts: 5-1000
+Group description: 5-256

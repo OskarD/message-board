@@ -1,16 +1,15 @@
 <?php
-	require_once 'lib/pages/class.ForumIndexPage.inc';
-	$page = new ForumIndexPage("Forum", false);
+	require_once 'lib/pages/class.ViewGroupPage.inc';
+
+	$page = new ViewGroupPage($_GET['group_id']);
 	print $page->getHead();
 ?>
 <body>
 	<?php
 		print $page->getHeader();
 
-		print $page->getForumHTMLOverview();
+		print $page->getGroupHTMLPage();
 	?>
-
-	
 
 	<?php
 		print $page->getFooter();
