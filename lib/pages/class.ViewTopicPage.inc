@@ -63,7 +63,7 @@
 			foreach($this->getPosts() as $post) {
 				$output .= "
 						<div class='view_topic_post'>
-							<div class='view_topic_post_info'>Post by: " . $post->getCreator()->getName() . " at " . $post->getDate() . "</div>
+							<div class='view_topic_post_info'>Post by: " . $post->getCreator()->getHTMLLinkedName() . " at " . $post->getDate() . "</div>
 							<div class='view_topic_post_text'>" . $post->getText() . "</div>
 						</div>";
 			}
