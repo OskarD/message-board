@@ -46,10 +46,12 @@
 			$this->addNavigationItem("Users", "users.php");
 			$this->addNavigationItem("Forum", "forum_index.php");
 
-			if(WebUser::isLoggedIn())
-			{
-				// Add default navigation items
-				
+			if(WebUser::isLoggedIn()) {
+				$this->addNavigationItem("Sign Out", "sign_out.php");
+			}
+			else {
+				$this->addNavigationItem("Sign In", "sign_in.php");
+				$this->addNavigationItem("Register", "register.php");
 			}
 		}
 
@@ -72,18 +74,25 @@
 		 * This needs to be called before anything else is printed on the page
 		 * @return string
 		 */
-		public function getHead($extraContent = "") {
-			return '
-				<!DOCTYPE html>
+		public function getHead($extraContent = "", $useJQuery = false) {
+			//  Google JQuery: <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+			$output = '
+				<!doctype html>
 				<html>
 					<head>
 					  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 					  <title>Message Boards - ' . $this->title . '</title>
-					  <link rel="stylesheet" href="css/styles.css" type="text/css">
-					  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-					  ' . $extraContent . '
+					  <link rel="stylesheet" href="css/styles.css" type="text/css">';
+
+			if($useJQuery == true)
+				$output .= "<script src='js/jquery-1.11.1.min.js'></script>";
+
+			$output .= $extraContent . '
 					</head>
 			';
+
+			return $output;
 		}
 
 		/**
@@ -100,6 +109,12 @@
 
 		public function getHeader() {
 			$output = "<div class='header'><h1>Message Boards</h1>";
+
+
+			if(WebUser::isLoggedIn()) {
+				$user = User::getUserById( WebUser::getUserId() );
+				$output .= "<div class='logged_in_user_info'>Logged in: " . $user->getHTMLLinkedName() . "</div>";
+			}
 
 			$output .= $this->getNavigation();
 

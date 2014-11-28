@@ -52,6 +52,9 @@
 		}
 
 		public function addTopic(Topic $topic) {
+			if(!isset($this->topics))
+				$this->topics = array();
+
 			$this->topics[] = $topic;
 		}
 
@@ -62,15 +65,21 @@
 		}
 
 		public function getTopics() {
+			if(!isset($this->topics))
+				$this->loadTopics();
+
 			return $this->topics;
 		}
 
-		function __construct($id, $date, $name, $userGroupViewing, $userGroupPosting, $topics = array()){
+		function __construct($id, $date, $name, $userGroupViewing, $userGroupPosting){
 			$this->setId($id);
 			$this->setName($name);
 			$this->setUserGroupViewing($userGroupViewing);
 			$this->setUserGroupPosting($userGroupPosting);
-			$this->setTopics($topics);
+		}
+
+		public function getHTMLLinkedName() {
+			return "<a href='view_table.php?table_id=" . $this->getId() . "'>" . $this->getName() . "</a>";
 		}
 
 		// Database functions
@@ -85,6 +94,32 @@
 			$table = $stmt->fetch(PDO::FETCH_ASSOC);
 
 			return new Table($table['id'], $table['date'], $table['name'], $table['user_group_viewing'], $table['user_group_posting']);
+		}
+
+		public function getLastActiveTopic() {
+			$db = DB::getDb();
+
+			$query ="SELECT 
+						* 
+					FROM 
+						topics
+					JOIN
+						posts
+					ON
+						posts.topic = topics.id
+					WHERE 
+						`table` = :table_id 
+					ORDER BY
+						posts.date DESC
+					LIMIT 1";
+
+			$stmt = $db->prepare($query);
+			$stmt->bindParam(":table_id", $this->id);
+			$stmt->execute();
+
+			$result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+			return new Topic($result['id'], $result['date'], $result['table'], $result['name'], $result['user']);
 		}
 
 		public function loadTopics() {

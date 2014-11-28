@@ -2,6 +2,7 @@
 	require_once 'lib/class.Page.inc';
 	require_once 'lib/class.Topic.inc';
 	require_once 'lib/class.DB.inc';
+	require_once 'lib/class.WebUser.inc';
 
 	/**
 	 * @author Oskar Danielsson
@@ -11,6 +12,10 @@
 			$tableId,
 			$table,
 			$topics;
+
+		public function getTableId() {
+			return $this->tableId;
+		}
 
 		public function setTable(Table $table) {
 			$this->table = $table;
@@ -47,9 +52,18 @@
 		public function getTableHTMLView() {
 			$output = "
 				<div class='view_table'>
-					<h2>" . $this->getTable()->getName() . "</h2>
+					<h2>" . $this->getTable()->getName() . "</h2>";
+
+			if(WebUser::isLoggedIn()) {
+				$output .= "
+					<div class='view_table_new_topic'>
+						<a href='new_topic.php?table=" . $this->getTable()->getId() . "'>Create new topic</a>
+					</div>";
+			}
+
+			$output .= "
 					<div class='view_table_topic_list'>
-						<h3>Topics in this table</h3>
+						<h3>Topics</h3>
 						<ol>";
 
 			foreach($this->table->loadTopics() as $topic) {
@@ -68,12 +82,9 @@
 
 			$output .= "
 						</ol>
-					</div>
-				</div>";
+					</div>";
 
-
-
-			return $output;
+			return $output . "</div>";
 		}
 	}
 ?>

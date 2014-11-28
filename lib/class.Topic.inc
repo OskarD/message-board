@@ -87,6 +87,33 @@
 		}
 
 		// Database functions
+		public static function create($tableId, $name, $text, $userId) {
+			$db = DB::getDb();
+
+			$query ="INSERT INTO topics (
+						`table`,
+						name,
+						user
+					)
+					VALUES (
+						:table_id,
+						:name,
+						:user_id
+					)";
+
+			$stmt = $db->prepare($query);
+			$stmt->bindParam(":table_id", $tableId);
+			$stmt->bindParam(":name", $name);
+			$stmt->bindParam(":user_id", $userId);
+			$stmt->execute();
+
+			$inserted = $db->lastInsertId();
+
+			Post::create($inserted, $userId, $text);
+
+			return $inserted;
+		}
+
 		public function getLastPost() {
 			$db = DB::getDb();
 			$query ="SELECT * FROM posts WHERE topic = :topic_id ORDER BY date DESC LIMIT 1";
@@ -101,7 +128,7 @@
 
 		public function loadPosts() {
 			$db = DB::getDb();
-			$query ="SELECT * FROM posts WHERE topic = :topic_id ORDER BY date DESC";
+			$query ="SELECT * FROM posts WHERE topic = :topic_id ORDER BY date ASC";
 			$stmt = $db->prepare($query);
 			$stmt->bindParam(":topic_id", $this->id);
 			$stmt->execute();

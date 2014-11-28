@@ -47,7 +47,7 @@
 		}
 
 		public function getText() {
-			return $this->text;
+			return self::formatText($this->text);
 		}
 
 		function __construct($id, $date, $topic, $userId, $text){
@@ -58,7 +58,34 @@
 			$this->setText($text);
 		}
 
+		public static function formatText($text) {
+			return nl2br($text);
+		}
+
 		// Database functions
+		public static function create($topicId, $userId, $text) {
+			$db = DB::getDb();
+
+			$query ="INSERT INTO posts (
+						`topic`,
+						`user`,
+						`text`
+					)
+					VALUES (
+						:topic_id,
+						:user_id,
+						:post_text
+					)";
+
+			$stmt = $db->prepare($query);
+			$stmt->bindParam(":topic_id", $topicId);
+			$stmt->bindParam(":user_id", $userId);
+			$stmt->bindParam(":post_text", $text);
+			$stmt->execute();
+
+			return $db->lastInsertId();
+		}
+
 		public static function getPostById($postId) {
 			$db = DB::getDb();
 			$query ="SELECT * FROM posts WHERE id = :post_id";
