@@ -122,5 +122,31 @@
 
 			return $result['count'];
 		}
+
+		public function getLastLogin() {
+			$db = DB::getDb();
+
+			$query ="SELECT * FROM logins WHERE user = :user_id ORDER BY date DESC LIMIT 1";
+			$stmt = $db->prepare($query);
+			$stmt->bindParam(":user_id", $this->id);
+			$stmt->execute();
+
+			$result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+			return new LoginInstance($result['id'], $result['user'], $result['date'], $result['ip']);
+		}
+
+		public function getFirstLogin() {
+			$db = DB::getDb();
+
+			$query ="SELECT * FROM logins WHERE user = :user_id ORDER BY date ASC LIMIT 1";
+			$stmt = $db->prepare($query);
+			$stmt->bindParam(":user_id", $this->id);
+			$stmt->execute();
+
+			$result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+			return new LoginInstance($result['id'], $result['user'], $result['date'], $result['ip']);
+		}
 	}
 ?>

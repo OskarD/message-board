@@ -1,6 +1,6 @@
 $(function() {
 	$('#form_sign_in').submit(function() {
-		verifySignInFields();
+		return verifySignInFields();
 	});
 });
 
@@ -26,7 +26,9 @@ function verifySignInFields() {
 		return finishAttempt();
 	}
 
-	return finishAttempt();
+	finishAttempt();
+
+	return true;
 }
 
 function verifyUsername(username) {

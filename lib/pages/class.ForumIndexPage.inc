@@ -52,15 +52,13 @@
 			foreach($this->getTables() as $table) {
 				$output .= "<li class='forum_overview_table'>" . $table->getHTMLLinkedName();
 
-				$lastTopic = $table->getLastActiveTopic();
-
-				if(!is_null($lastTopic->getId())) {
+				if(count($table->getTopics()) > 0) {
 					$output .= "
 						<div class='forum_overview_topic_count'>
-							Topics: " . count($lastTopic->loadPosts()) . "
+							Topics: " . count($table->getTopics()) . "
 						</div>
 						<div class='forum_overview_last_topic'>
-							Last topic: " . $lastTopic->getHTMLLinkedName() . "
+							Last topic: " . $table->getLastActiveTopic()->getHTMLLinkedName() . "
 						</div>";
 				}
 				else

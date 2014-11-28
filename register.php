@@ -12,7 +12,7 @@
 
 	<div class='register_view'>
 		<h2>Register</h2>
-		<form id='form_register' method="post">
+		<form id='form_register' method="post" action="index.php">
 			Username<br />
 			<input type='text' id='username' name='username' required /><br />
 			E-mail<br />

@@ -66,7 +66,7 @@
 						<h3>Topics</h3>
 						<ol>";
 
-			foreach($this->table->loadTopics() as $topic) {
+			foreach($this->table->getTopics() as $topic) {
 				$output .= "<li><a href='view_topic.php?topic_id=" . $topic->getId() . "'>" . $topic->getName() . "</a>";
 
 				$lastPost = $topic->getLastPost();

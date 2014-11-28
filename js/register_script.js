@@ -1,6 +1,6 @@
 $(function() {
 	$('#form_register').submit(function() {
-		verifyRegisterFields();
+		return verifyRegisterFields();
 	});
 });
 
@@ -30,9 +30,7 @@ function verifyRegisterFields() {
 		return finishAttempt();
 	}
 
-	attemptRegister(username, password, email);
-
-	return finishAttempt();
+	return attemptRegister(username, password, email);;
 }
 
 function finishAttempt() {
@@ -84,6 +82,7 @@ function attemptRegister(username, password, email) {
 					break;
 				case 'registered':
 					alert("Your account has been registered!");
+					return true;
 					break;
 				default:
 					alert("Something went wrong. This shouldn't happen.");
@@ -94,4 +93,6 @@ function attemptRegister(username, password, email) {
 			alert("Ajax: " + textStatus.responseText + errorThrown);
 		}
 	});
+
+	return false;
 }

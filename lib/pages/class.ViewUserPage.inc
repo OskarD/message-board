@@ -32,7 +32,7 @@
 					Username: " . $this->getUser()->getName() . "<br />
 					E-mail: " . $this->getUser()->getEmail();
 
-			$groups = $this->user->getGroups();
+			$groups = $this->getUser()->getGroups();
 
 			if(count($groups) > 0) {
 				$output .= "<div class='profile_view_groups'>Groups: <ol>";
@@ -42,10 +42,12 @@
 				$output .= "</ol></div>";
 			}
 
-			$postCount = $this->user->getPostCount();
+			$postCount = $this->getUser()->getPostCount();
 
 			$output .= "<div class='profile_view_stats'><strong>Forum Statistics</strong><br />
-							Posts made: " . $postCount . "
+							Posts made: " . $postCount . "<br />
+							First login: " . $this->getUser()->getFirstLogin()->getDate() . "<br />
+							Last login: " .  $this->getUser()->getLastLogin()->getDate() . "
 						</div>";
 
 			return $output . "</div>";

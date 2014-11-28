@@ -47,6 +47,8 @@
 		}
 
 		public function setMembers(array $members) {
+			$this->members = array();
+
 			foreach($members as $member) {
 				$this->addMember($member);
 			}

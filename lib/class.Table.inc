@@ -9,7 +9,8 @@
 			$name,
 			$userGroupViewing,
 			$userGroupPosting,
-			$topics;
+			$topics,
+			$lastActiveTopic;
 
 		public function setId($id) {
 			$this->id = $id;
@@ -59,8 +60,10 @@
 		}
 
 		public function setTopics(array $topics) {
+			$this->topics = array();
+
 			foreach($topics as $topic) {
-				$this->addTopic($topics);
+				$this->addTopic($topic);
 			}
 		}
 
@@ -69,6 +72,17 @@
 				$this->loadTopics();
 
 			return $this->topics;
+		}
+
+		public function setLastActiveTopic(Topic $lastActiveTopic) {
+			$this->lastActiveTopic = $lastActiveTopic;
+		}
+
+		public function getLastActiveTopic() {
+			if(!isset($this->lastActiveTopic))
+				$this->loadLastActiveTopic();
+
+			return $this->lastActiveTopic;
 		}
 
 		function __construct($id, $date, $name, $userGroupViewing, $userGroupPosting){
@@ -96,11 +110,15 @@
 			return new Table($table['id'], $table['date'], $table['name'], $table['user_group_viewing'], $table['user_group_posting']);
 		}
 
-		public function getLastActiveTopic() {
+		private function loadLastActiveTopic() {
 			$db = DB::getDb();
 
 			$query ="SELECT 
-						* 
+						topics.id as id,
+						posts.date as `date`,
+						topics.table as `table`,
+						topics.name as name,
+						topics.user as user
 					FROM 
 						topics
 					JOIN
@@ -119,10 +137,10 @@
 
 			$result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-			return new Topic($result['id'], $result['date'], $result['table'], $result['name'], $result['user']);
+			$this->setLastActiveTopic(new Topic($result['id'], $result['date'], $result['table'], $result['name'], $result['user']));
 		}
 
-		public function loadTopics() {
+		private function loadTopics() {
 			$db = DB::getDb();
 
 			$query ="SELECT * FROM topics WHERE `table` = :table_id";
@@ -137,7 +155,7 @@
 				$topics[] = new Topic($topic['id'], $topic['date'], $topic['table'], $topic['name'], $topic['user']);
 			}
 
-			return $topics;
+			$this->setTopics($topics);
 		}
 	}
 ?>

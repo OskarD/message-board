@@ -1,5 +1,6 @@
 <?php
 	require_once 'lib/class.DB.inc';
+	require_once 'lib/class.LoginInstance.inc';
 
 	WebUser::startSession();
 
@@ -22,11 +23,16 @@
 
 		public static function logIn($userId) {
 			$_SESSION['user_id'] = $userId;
+			LoginInstance::insertIntoDb($userId, self::getIp());
 		}
 
 		public static function logOut() {
 			$_SESSION = array();
 			session_destroy();
+		}
+
+		public static function getIp() {
+			return $_SERVER['REMOTE_ADDR'];
 		}
 
 		public static function startSession() {

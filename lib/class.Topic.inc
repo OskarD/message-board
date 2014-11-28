@@ -60,6 +60,8 @@
 		}
 
 		public function setPosts(array $posts) {
+			$this->posts = array();
+			
 			foreach($posts as $post) {
 				$this->addPost($post);
 			}
