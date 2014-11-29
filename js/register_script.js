@@ -1,6 +1,8 @@
 $(function() {
-	$('#form_register').submit(function() {
-		return verifyRegisterFields();
+	$('#form_register').submit(function(event) {
+		var verify_succeeded  = verifyRegisterFields();
+		if(verify_succeeded == false)
+			event.preventDefault();
 	});
 });
 
@@ -81,7 +83,7 @@ function attemptRegister(username, password, email) {
 					alert("This e-mail is already registered.");
 					break;
 				case 'registered':
-					alert("Your account has been registered!");
+					alert("Your account has been registered! Please log in on the next page.");
 					return true;
 					break;
 				default:
@@ -94,5 +96,5 @@ function attemptRegister(username, password, email) {
 		}
 	});
 
-	return false;
+	return true;
 }

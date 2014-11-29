@@ -82,7 +82,7 @@
 				<html>
 					<head>
 					  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-					  <title>Message Boards - ' . $this->title . '</title>
+					  <title>Oskar\'s Forum - ' . $this->title . '</title>
 					  <link rel="stylesheet" href="css/styles.css" type="text/css">';
 
 			if($useJQuery == true)
@@ -108,21 +108,30 @@
 		}
 
 		public function getHeader() {
-			$output = "<div class='header'><h1>Message Boards</h1>";
+			$output = "
+			<div class='header'>
+				<h1>Oskar's Forum</h1>";
 
 
 			if(WebUser::isLoggedIn()) {
 				$user = User::getUserById( WebUser::getUserId() );
-				$output .= "<div class='logged_in_user_info'>Logged in: " . $user->getHTMLLinkedName() . "</div>";
+				$output .= "
+				<div class='logged_in_user_info'>Logged in: <span class='bold'>" . $user->getHTMLLinkedName() . "</span></div>";
 			}
 
 			$output .= $this->getNavigation();
 
-			return $output . "</div>";
+			return $output . "
+				</div>
+				<div class='content_wrapper bordered'>";
 		}
 
 		public function getFooter() {
-			return "<div class='footer'>Footer, copyright and shit</div>";
+			return "
+				</div>
+				<div class='footer'>
+					Footer, copyright and shit
+				</div>";
 		}
 
 		/**

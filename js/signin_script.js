@@ -1,6 +1,8 @@
 $(function() {
-	$('#form_sign_in').submit(function() {
-		return verifySignInFields();
+	$('#form_sign_in').submit(function(event) {
+		var verify_succeeded  = verifySignInFields();
+		if(verify_succeeded == false)
+			event.preventDefault();
 	});
 });
 

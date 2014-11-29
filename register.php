@@ -12,7 +12,7 @@
 
 	<div class='register_view'>
 		<h2>Register</h2>
-		<form id='form_register' method="post" action="index.php">
+		<form id='form_register' method="post" action="sign_in.php">
 			Username<br />
 			<input type='text' id='username' name='username' required /><br />
 			E-mail<br />
@@ -21,7 +21,7 @@
 			<input type='password' id='password' name='password' required /><br />
 			Repeat password<br />
 			<input type='password' id='repeated_password' name='repeated_password' required /><br />
-			<button type="submit" id='submit' name='submit'>Register</button>
+			<button class="btn" type="submit" id='submit' name='submit'>Register</button>
 		</form>
 	</div>
 

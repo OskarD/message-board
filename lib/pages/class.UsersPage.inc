@@ -40,13 +40,18 @@
 		}
 
 		public function getUserHTMLList(){
-			$result = "<h2>Users</h2><ol class='userlist'>";
+			$result = "
+				<h2>Users</h2>
+				<div class='inner_container'>
+					<ol class='userlist'>";
 
 			foreach($this->getUsers() as $user) {
 				$result .= "<li>" . $user->getHTMLLinkedName() . "</li>";
 			}
 
-			return $result . "</ol>";
+			return $result . "
+					</ol>
+				</div>";
 		}
 	}
 ?>

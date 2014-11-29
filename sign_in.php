@@ -17,7 +17,7 @@
 			<input type='text' id='username' name='username' required /><br />
 			Password<br />
 			<input type='password' id='password' name='password' required /><br />
-			<button type="submit" id='submit' name='submit'>Sign in</button>
+			<button class="btn" type="submit" id='submit' name='submit'>Sign in</button>
 		</form>
 	</div>
 

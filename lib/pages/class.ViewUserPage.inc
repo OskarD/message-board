@@ -35,11 +35,15 @@
 			$groups = $this->getUser()->getGroups();
 
 			if(count($groups) > 0) {
-				$output .= "<div class='profile_view_groups'>Groups: <ol>";
+				$output .= "
+					<div class='profile_view_groups'>Groups:
+						<ol>";
 				foreach($groups as $group) {
 					$output .= "<li>" . $group->getHTMLLinkedName() . "</li>";
 				}
-				$output .= "</ol></div>";
+				$output .= "
+						</ol>
+					</div";
 			}
 
 			$postCount = $this->getUser()->getPostCount();
@@ -50,7 +54,8 @@
 							Last login: " .  $this->getUser()->getLastLogin()->getDate() . "
 						</div>";
 
-			return $output . "</div>";
+			return $output . "
+					</div>";
 		}
 	}
 ?>

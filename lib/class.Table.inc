@@ -143,7 +143,14 @@
 		private function loadTopics() {
 			$db = DB::getDb();
 
-			$query ="SELECT * FROM topics WHERE `table` = :table_id";
+			$query ="SELECT 
+						* 
+					FROM 
+						topics 
+					WHERE 
+						`table` = :table_id 
+					ORDER BY 
+						date DESC";
 			$stmt = $db->prepare($query);
 			$stmt->bindParam(":table_id", $this->id);
 			$stmt->execute();

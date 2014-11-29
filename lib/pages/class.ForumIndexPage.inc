@@ -47,27 +47,43 @@
 		}
 
 		public function getForumHTMLOverview() {
-			$output = "<h2>Forum</h1><ol class='forum_overview'>";
+			$output = "
+				<h2>Forum</h1>
+				
+				<ol class='forum_overview'>";
 
 			foreach($this->getTables() as $table) {
-				$output .= "<li class='forum_overview_table'>" . $table->getHTMLLinkedName();
+				$output .= "
+					<li class='forum_overview_table'>
+						<div class='inner_container'>
+							<span class='table_name bold'>" . $table->getHTMLLinkedName() . "</span>";
+
+				$lastActiveTopic = $table->getLastActiveTopic();
+				$lastActiveTopicUser = User::getUserById($lastActiveTopic->getUser());
 
 				if(count($table->getTopics()) > 0) {
 					$output .= "
-						<div class='forum_overview_topic_count'>
-							Topics: " . count($table->getTopics()) . "
-						</div>
-						<div class='forum_overview_last_topic'>
-							Last topic: " . $table->getLastActiveTopic()->getHTMLLinkedName() . "
-						</div>";
+							<div class='forum_overview_topic_count'>
+								Topics: " . count($table->getTopics()) . "
+							</div>
+							<div class='forum_overview_last_topic'>
+								Last topic: " . $lastActiveTopic->getHTMLLinkedName() . " by " . $lastActiveTopicUser->getHTMLLinkedName() . "
+							</div>";
 				}
 				else
-					$output .= "<div class='forum_overview_last_topic'>There are no topics in this table.</div>";
+					$output .= "
+							<div class='forum_overview_last_topic'>
+								There are no topics in this table.
+							</div>";
 
-				$output .= "</li>";
+				$output .= "
+						</div>
+					</li>";
 			}
 
-			return $output . "</ol>";
+			return $output . "
+					</ol>
+				</div>";
 		}
 	}
 ?>
