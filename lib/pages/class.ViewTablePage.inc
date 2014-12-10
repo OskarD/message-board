@@ -72,7 +72,7 @@
 				foreach($this->table->getTopics() as $topic) {
 					$output .= "
 								<li>
-									<div class='forum_list'>
+									<div class='forum_list bordered'>
 										<div class='forum_list_topic_name bold'>
 											" . $topic->getHTMLLinkedName() . "
 										</div>";

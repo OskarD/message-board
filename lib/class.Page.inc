@@ -123,13 +123,13 @@
 
 			return $output . "
 				</div>
-				<div class='content_wrapper bordered'>";
+				<div class='bordered content_wrapper'>";
 		}
 
 		public function getFooter() {
 			return "
 				</div>
-				<div class='footer'>
+				<div class='bordered footer'>
 					Footer, copyright and shit
 				</div>";
 		}
