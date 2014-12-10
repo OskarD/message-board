@@ -67,7 +67,7 @@
 								Topics: " . count($table->getTopics()) . "
 							</div>
 							<div class='forum_overview_last_topic'>
-								Last topic: " . $lastActiveTopic->getHTMLLinkedName() . " by " . $lastActiveTopicUser->getHTMLLinkedName() . "
+								Last topic: <span class='bold'>" . $lastActiveTopic->getHTMLLinkedName() . "</span> by <span class='bold'>" . $lastActiveTopicUser->getHTMLLinkedName() . "</span>
 							</div>";
 				}
 				else

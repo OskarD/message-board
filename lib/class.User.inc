@@ -148,5 +148,15 @@
 
 			return new LoginInstance($result['id'], $result['user'], $result['date'], $result['ip']);
 		}
+
+		function getJsonData() {
+			$var = get_object_vars($this);
+			foreach($var as &$value){
+				if(is_object($value) && method_exists($value,'getJsonData')){
+					$value = $value->getJsonData();
+				}
+			}
+			return $var;
+		}
 	}
 ?>

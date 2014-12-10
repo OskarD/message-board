@@ -27,7 +27,7 @@
 						<input type='text' id='name' name='name' required /><br />
 						Text:<br />
 						<textarea id='text' name='text' rows='20' cols='80'></textarea><br />
-						<button type='submit' id='submit' name='submit'>Create</button>
+						<button class='btn' type='submit' id='submit' name='submit'>Create</button>
 						<input type='hidden' id='table_id' name='table_id' value='" . $this->getTableId() . "' />
 					</form>
 				</div>";

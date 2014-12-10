@@ -79,13 +79,21 @@
 					<div class='view_topic_posts'>";
 
 			foreach($this->getPosts() as $post) {
+				$creator = $post->getCreator();
+
 				$output .= "
 						<div class='view_topic_post inner_container'>
 							<div class='view_topic_post_info'>
-								<span class='post_creator'>" . $post->getCreator()->getHTMLLinkedName() . "</span><span class='post_date'> at " . $post->getDate() . "</span>
+								<span class='post_creator'>" . $creator->getHTMLLinkedName() . "</span><span class='post_date'> at " . $post->getDate() . "</span>";
+
+				if(WebUser::isLoggedIn() && WebUser::getUserId() == $creator->getId()) {
+					$output .= "<span class='stick_right'><a href='edit_post.php?post_id=" . $post->getId() . "'><span class='btn'>Edit</span></a></span>";
+				}
+
+				$output .= "
 							</div>
 							<div class='view_topic_post_text'>
-								" . $post->getText() . "
+								" . Post::formatText($post->getText()) . "
 							</div>
 						</div>";
 			}
@@ -98,7 +106,7 @@
 					<div class='view_topic_new_post'>
 						<h3>Reply</h3>
 						<form id='post_reply' action='post_reply.php' method='post'>
-							<textarea id='text' name='text' rows='20' cols='80'></textarea><br />
+							<textarea id='text' name='text' rows='20' cols='88'></textarea><br />
 							<button class='btn' type='submit'>Post Reply</button>
 							<input type='hidden' id='topic_id' name='topic_id' value='" . $this->getTopic()->getId() . "' />
 						</form>

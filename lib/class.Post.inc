@@ -47,7 +47,7 @@
 		}
 
 		public function getText() {
-			return self::formatText($this->text);
+			return $this->text;
 		}
 
 		function __construct($id, $date, $topic, $userId, $text){
@@ -123,6 +123,22 @@
 			$user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 			return new User($user['id'], $user['name'], $user['password'], $user['email'], $user['default_group']);
+		}
+
+		public static function dbUpdate($postId, $text) {
+			$db = DB::getDb();
+
+			$query ="UPDATE
+						posts
+					SET
+						text = :text
+					WHERE
+						id = :post_id";
+
+			$stmt = $db->prepare($query);
+			$stmt->bindParam(":text", $text);
+			$stmt->bindParam(":post_id", $postId);
+			$stmt->execute();
 		}
 	}
 ?>
