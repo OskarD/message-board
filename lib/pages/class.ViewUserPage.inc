@@ -3,7 +3,6 @@
 	require_once 'lib/class.DB.inc';
 	require_once 'lib/class.User.inc';
 	require_once 'lib/class.Image.inc';
-	require_once 'lib/class.Webuser.inc';
 
 	class ViewUserPage extends Page {
 		private

@@ -159,13 +159,15 @@ else { $error_status = 1; $error_message = "There was a problem with the file be
 /*
   PAGE OUTPUT
 */
+
+if($error_status == 0)
+	header("Location: view_user.php?user_id=" . $_POST['user_id']);
+
 print "<html><head>\n";
 print "<title>Image Upload Status</title>\n";
-print "</head><body>\n";
+print "</head><body>Uploading file...\n";
 if($error_status != 0)
-	print $error_status . " " . $error_message;
-else
-	header("Location: view_user.php?user_id=" . $_POST['user_id']);
+	print "Error: " .$error_status . " " . $error_message;
 print "</body>\n";
 print "</html>\n";
 exit;

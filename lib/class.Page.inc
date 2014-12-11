@@ -1,4 +1,5 @@
 <?php
+	require_once 'class.User.inc';
 	require_once 'class.WebUser.inc';
 	require_once 'class.Navigation.inc';
 
