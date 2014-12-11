@@ -29,7 +29,7 @@
 		}
 
 		function __construct($id, $name, $password, $email, $defaultGroup, $groupId, $groupModerator = null) {
-			parent::__construct($id, $name, $password, $email, $defaultGroup);
+			parent::__construct($id, $name, $password, $email, $defaultGroup, null);
 			$this->setGroupId($groupId);
 
 			if($groupModerator != null)
