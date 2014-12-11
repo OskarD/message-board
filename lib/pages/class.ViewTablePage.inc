@@ -57,7 +57,7 @@
 			if(WebUser::isLoggedIn()) {
 				$output .= "
 					<div class='view_table_new_topic'>
-						<span class='btn'><a href='new_topic.php?table=" . $this->getTable()->getId() . "'>Create new topic</a></span>
+						<a href='new_topic.php?table=" . $this->getTable()->getId() . "'><span class='btn'>Create new topic</span></a>
 					</div>";
 			}
 

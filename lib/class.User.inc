@@ -7,7 +7,8 @@
 			$name,
 			$password,
 			$email,
-			$defaultGroup;
+			$defaultGroup,
+			$avatar;
 
 		public function setId($id) {
 			$this->id = $id;
@@ -48,13 +49,22 @@
 		public function getDefaultGroup() {
 			return $this->defaultGroup;
 		}
+
+		public function setAvatar($avatar) {
+			$this->avatar = $avatar;
+		}
+
+		public function getAvatar() {
+			return $this->avatar;
+		}
 		
-		function __construct($id, $name, $password, $email, $defaultGroup) {
+		function __construct($id, $name, $password, $email, $defaultGroup, $avatar) {
 			$this->setId($id);
 			$this->setName($name);
 			$this->setPassword($password);
 			$this->setEmail($email);
 			$this->setdefaultGroup($defaultGroup);
+			$this->setAvatar($avatar);
 		}
 
 		public function getHTMLLinkedName() {
@@ -72,7 +82,7 @@
 
 			$user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-			return new User($user['id'], $user['name'], $user['password'], $user['email'], $user['default_group']);
+			return new User($user['id'], $user['name'], $user['password'], $user['email'], $user['default_group'], $user['avatar']);
 		}
 
 		public function getGroups() {

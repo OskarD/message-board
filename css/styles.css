@@ -66,6 +66,7 @@ nav ol li {
 
 .page_wrapper {
 	width: 50em;
+	height: 100%;
 	
 	left: 0;
 	right: 0;
@@ -147,6 +148,8 @@ nav ol li a {
 	margin: 1em 0;
 
 	position: relative;
+
+	height: 100%;
 }
 
 .forum_list {
@@ -198,4 +201,35 @@ nav ol li a {
 .stick_right {
 	position: absolute;
 	right: .5em;
+}
+
+.profile_view {
+	height: 100%;
+	width: 96%;
+	display: inline-block;
+}
+
+.profile_view_basic {
+	padding-bottom: 1em;
+	float: left;
+}
+
+.avatar {
+	float: right;
+}
+
+.profile_view_groups {
+	clear: left;
+	float: left;
+	padding-bottom: 1em;
+}
+
+.profile_view_groups li {
+	margin-left: 1em;
+}
+
+.profile_view_stats {
+	clear: left;
+	float: left;
+	bottom: 0;
 }

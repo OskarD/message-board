@@ -27,7 +27,7 @@
 			$users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 			foreach($users as $user) {
-				$this->addUser(new User($user['id'], $user['name'], $user['password'], $user['email'], $user['default_group']));
+				$this->addUser(new User($user['id'], $user['name'], $user['password'], $user['email'], $user['default_group'], $user['avatar']));
 			}
 		}
 

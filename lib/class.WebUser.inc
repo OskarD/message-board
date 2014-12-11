@@ -18,7 +18,10 @@
 		}
 
 		public static function getUserId() {
-			return $_SESSION['user_id'];
+			if(isset($_SESSION['user_id']))
+				return $_SESSION['user_id'];
+			else
+				return -1;
 		}
 
 		public static function logIn($userId) {

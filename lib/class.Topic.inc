@@ -166,7 +166,8 @@
 						 users.name as name, 
 						 users.password as password, 
 						 users.email as email, 
-						 users.default_group as default_group
+						 users.default_group as default_group,
+						 users.avatar as avatar
 					FROM 
 						users 
 					JOIN 
@@ -182,7 +183,7 @@
 
 			$user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-			return new User($user['id'], $user['name'], $user['password'], $user['email'], $user['default_group']);
+			return new User($user['id'], $user['name'], $user['password'], $user['email'], $user['default_group'], $user['avatar']);
 		}
 	}
 ?>
