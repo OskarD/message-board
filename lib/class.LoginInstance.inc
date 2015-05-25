@@ -1,5 +1,5 @@
 <?php
-	require_once 'lib/class.DB.inc';
+	require_once 'class.DB.inc';
 
 	class LoginInstance {
 		private

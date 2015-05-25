@@ -1,6 +1,6 @@
 <?php
-	require_once 'lib/class.GroupUser.inc';
-	require_once 'lib/class.DB.inc';
+	require_once 'class.GroupUser.inc';
+	require_once 'class.DB.inc';
 
 	class Group {
 		private

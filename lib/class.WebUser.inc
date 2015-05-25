@@ -1,6 +1,6 @@
 <?php
-	require_once 'lib/class.DB.inc';
-	require_once 'lib/class.LoginInstance.inc';
+	require_once 'class.DB.inc';
+	require_once 'class.LoginInstance.inc';
 
 	WebUser::startSession();
 

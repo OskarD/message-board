@@ -1,6 +1,6 @@
 <?php
-	require_once 'lib/class.User.inc';
-	require_once 'lib/class.DB.inc';
+	require_once 'class.User.inc';
+	require_once 'class.DB.inc';
 
 	class AppUser extends User {
 		protected
@@ -21,6 +21,6 @@
 
 			$user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-			return new AppUser($user['id'], $user['name'], $user['password'], $user['email'], $user['default_group']);
+			return new AppUser($user['id'], $user['name'], $user['password'], $user['email'], $user['default_group'], $user['avatar']);
 		}
 	}
