@@ -12,7 +12,8 @@
 			'loginString' 	=> $user->getLoginString(),
 			'email'			=> $user->getEmail(),
 			'defaultGroup' 	=> $user->getDefaultGroup(),
-			'avatar'		=> $user->getAvatar()
+			'avatar'		=> $user->getAvatar(),
+			'avatarData'	=> base64_encode($user->getAvatarData())
 		);
 
 		print json_encode($array);
